@@ -24,19 +24,24 @@ function mouseover({ target }) {
 
     let geojsonItem = target.feature.properties
 
+	
     let item = this.data.find(x => x[this.idKey] === Number(geojsonItem[this.geojsonIdKey]))
-    let tempItem = { name: item[this.titleKey], value: item[this.value.key] }
-    if (this.extraValues) {
-        let tempValues = [];
-        for (let x of this.extraValues) {
-            tempValues.push({
-                value: item[x.key],
-                metric: x.metric
-            })
-        }
-        tempItem = { ...tempItem, extraValues: tempValues }
-    }
-    this.currentItem = tempItem
+	if(item){
+		let tempItem = { name: item[this.titleKey], value: item[this.value.key] }
+		if (this.extraValues) {
+			let tempValues = [];
+			for (let x of this.extraValues) {
+				tempValues.push({
+					value: item[x.key],
+					metric: x.metric
+				})
+			}
+			tempItem = { ...tempItem, extraValues: tempValues }
+		}
+		this.currentItem = tempItem
+	}else{
+		this.currentItem = { name: "", value: 0 }
+	}
 }
 
 function mouseout({ target }) {
